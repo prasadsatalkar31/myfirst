@@ -5,10 +5,9 @@ from django.http import HttpRequest,HttpResponse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 import csv
-from django.conf import settings
+
 def db():
-    s=settings.BASE_DIR+'/app/static/questions.csv'
-    with open(s) as csvfile:
+    with open('questions.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         i=0
         for row in reader:
