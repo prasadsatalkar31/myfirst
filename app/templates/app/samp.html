@@ -1,0 +1,15 @@
+Welcome csdljfbkdhsbfdkjdngfkj
+
+<form action="/ques" method="post">
+    {% csrf_token %}
+    {% for q1 in q %}
+        <p>{{q1.question}}</p>
+        <input type="radio" name="oa" >{{q1.ca}}<br>
+        <input type="radio" name="ob" >{{q1.cb}}<br>
+        <input type="radio" name="oc" >{{q1.cc}}<br>
+        <input type="radio" name="od" >{{q1.cd}}<br>
+        <input type="submit" id="next" value="next">
+    {% endfor %}
+</form>
+
+{{q.ans}}
