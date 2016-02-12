@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 import csv
 from django.conf import settings
+from django.contrib.auth.models import User
+import random
 def db():
     s=settings.BASE_DIR+'/app/static/questions.csv'
     with open(s) as csvfile:
@@ -18,8 +20,10 @@ def db():
             op3= row['Option 3']
             op4= row['Option 4']
             ans=row['Answer']
-            x=questions(que=que,op1=op1,op2=op2,op3=op3,op4=op4,ans=ans)
+            x=questions(question=que,op1=op1,op2=op2,op3=op3,op4=op4,ans=ans)
             x.save()
+            user = User.objects.create_user('sanika','sanikashah1110@gmail.com', 'akinas')
+            user.save()
 
 def index(request):
 	con={}
@@ -28,15 +32,16 @@ def index(request):
 #@login_required
 def check(request):
     if request.POST.get("login-button"):
-
             name=request.POST.get("username")
             password=request.POST.get("password")
             print name
             print password
             s=authenticate(username=name,password=password)
+            print s
             if s:
                 login(request,s)
-                q=questions.objects.order_by('?')
+                r=random.randint(1,23)
+                q=questions.objects.get(id=r)
                 con={
                     "q":q
                 }
@@ -47,10 +52,11 @@ def check(request):
     else:
         return HttpResponse("Request not received")
 
-
-
 def ques(request):
-    pass
-
-
-
+                r=random.randint(1,23)
+                q=questions.objects.get(id=r)
+                con={
+                    "q":q
+                }
+                print q
+                return render(request,'app/samp.html',con)
