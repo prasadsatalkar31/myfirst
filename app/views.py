@@ -8,6 +8,7 @@ import csv
 from django.conf import settings
 from django.contrib.auth.models import User
 import random
+
 def db():
     s=settings.BASE_DIR+'/app/static/questions.csv'
     with open(s) as csvfile:
@@ -22,8 +23,8 @@ def db():
             ans=row['Answer']
             x=questions(question=que,op1=op1,op2=op2,op3=op3,op4=op4,ans=ans)
             x.save()
-            user = User.objects.create_user('sanika','sanikashah1110@gmail.com', 'akinas')
-            user.save()
+            #user = User.objects.create_user('sanika','sanikashah1110@gmail.com', 'akinas')
+            #user.save()
 
 def index(request):
 	con={}
@@ -36,10 +37,10 @@ def check(request):
             password=request.POST.get("password")
             print name
             print password
-            s=authenticate(username=name,password=password)
+            s=signup.objects.filter(userid=name,password=password)
             print s
             if s:
-                login(request,s)
+                #login(request,s)
                 r=random.randint(1,23)
                 q=questions.objects.get(id=r)
                 con={
