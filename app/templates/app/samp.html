@@ -1,13 +1,56 @@
-<html>
-<body style ="white-space: pre-wrap">
-<form action="/ques/" method="post">
-    {% csrf_token %}
-        <p>{{q.question}}</p>
-        <input type="radio" name="oa" >{{q.op1}}<br>
-        <input type="radio" name="ob" >{{q.op2}}<br>
-        <input type="radio" name="oc" >{{q.op3}}<br>
-        <input type="radio" name="od" >{{q.op4}}<br>
-        <input type="submit" id="next" value="next">
-</form>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+<link href="/static/questions/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/questions/fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+</head>
+<body style="...">
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="menu">
+		</div>
+		<div id="logo">
+			<h1><a href="#">PRADNYA INC 2016 </a></h1>
+		</div>
+	</div>
+</div>
+<div id="wrapper1">
+	<div id="welcome" class="container">
+		<div class="title">
+			<h2>Question:-</h2>
+		 </div>
+		<div class="content">
+            <form action="/ques/" method="post">
+                 {% csrf_token %}
+			<p> {{q.question}} </p>
+                <input type="radio" name="oa" >{{q.op1}}<br>
+                <input type="radio" name="ob" >{{q.op2}}<br>
+                <input type="radio" name="oc" >{{q.op3}}<br>
+                <input type="radio" name="od" >{{q.op4}}<br>
+
+			<a href="/ques" class="button">submit</a>
+            </form>
+        </div>
+
+	</div>
+</div>
+
+<div id="copyright">
+	<div class="title">
+		<h2>Get in touch</h2>
+
+	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://pictinc.org/">INC'16</a> | Design by <a href="http://pictinc.org" rel="nofollow">Shaktiman</a>.</p>
+</div>
 </body>
-<html>
+</html>
