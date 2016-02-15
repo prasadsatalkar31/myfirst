@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <title>Pradnya r1</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.countdown.css' %}">
+    <script src="{% static 'js/jquery.plugin.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.js' %}"></script>
+</head>
+<body>
+
+    <div class="container">
+        <center><h1>Questions</h1></center>
+        <br><hr>
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <div id="defaultCountdown"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <form action="/questions/" method="post">
+                    {% csrf_token %}
+                    <p class="panel panel-default" style="background:grey;">{{q.question}} </p>
+                    <input type="radio" name="oa" >{{q.op1}}<br><br>
+                    <input type="radio" name="ob" >{{q.op2}}<br><br>
+                    <input type="radio" name="oc" >{{q.op3}}<br><br>
+                    <input type="radio" name="od" >{{q.op4}}<br><br>
+
+                    <input type="submit" name="next" id="next" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <br><hr><br>
+        <center><a href="/" class="btn btn-danger btn-lg">Logout</a></center>
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        $(function () {
+            var timer_value = 0
+            timer_value = {{s.timestamp}} //s is a tuple sent from views
+            $('#defaultCountdown').countdown({until: timer_value,format: "MS",expiryUrl:"/"});
+
+            setInterval(function(){
+                var periods = $('#defaultCountdown').countdown('getTimes');
+                var new_period = periods[5]*60+periods[6];
+
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                var csrftoken = getCookie('csrftoken')
+
+                $.ajax({
+                    url  : '/update_state/',
+                    type : 'POST',
+                    data : {
+                        csrfmiddlewaretoken : csrftoken,
+                        uid   : {{s.userid}},
+                    },
+                    success : function() {
+                        console.log("Hi"); // another sanity check
+                    }
+                })
+            },10000)
+        });
+    </script>
+
+    <style type="text/css">
+        #defaultCountdown { width: 100%; height: 4em;border-radius: 10px; }
+    </style>
+</body>
+</html>
