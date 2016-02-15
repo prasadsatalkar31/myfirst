@@ -38,11 +38,11 @@
             <div class="col-md-3"></div>
         </div>
         <br><hr><br>
+        <br>
         <center><a href="/" class="btn btn-danger btn-lg">Logout</a></center>
     </div>
 
-
-
+    {{uid}}
 
     <script type="text/javascript">
         $(function () {
@@ -53,6 +53,7 @@
             setInterval(function(){
                 var periods = $('#defaultCountdown').countdown('getTimes');
                 var new_period = periods[5]*60+periods[6];
+                var uid = "{{uid}}"
 
                 function getCookie(name) {
                     var cookieValue = null;
@@ -76,13 +77,13 @@
                     type : 'POST',
                     data : {
                         csrfmiddlewaretoken : csrftoken,
-                        uid   : {{s.userid}},
+                        uid1   : uid,
                     },
                     success : function() {
                         console.log("Hi"); // another sanity check
                     }
                 })
-            },10000)
+            },1000)
         });
     </script>
 

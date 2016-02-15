@@ -34,7 +34,7 @@ def signup(request):
 		name = request.POST.get("username")
 		password = request.POST.get("password")
 
-		print name,password
+		#print name,password
 		s= Signup.objects.filter(userid=name,password=password)
 		if s:
 			uname=name
@@ -42,23 +42,24 @@ def signup(request):
 			mylist=map(str,so.array.split(';'))
 			if mylist[0]=='':
 				return HttpResponseRedirect('/')
-			print mylist
+			#print mylist
 			mlist=map(int,mylist)
-			print mlist
+			#print mlist
 			value = random.choice(mlist)
 			mlist.remove(value)
-			print value
-			print mlist
+			#print value
+			#print mlist
 			mylist2=";".join(str(x) for x in mlist)
 			so.array=mylist2
 			so.save()
-			print so.array
+			#print so.array
 			q=Questions.objects.get(id=value)
+			#print so.userid
 			con={
 			    "q":q,
-			    "s":so
+			    "s":so,
+                "uid":name
 			}
-			print so.userid,so.timestamp
 			return render(request,'round1/questions.html',con)
 		else:
 			return HttpResponse("Invalid")
@@ -66,12 +67,13 @@ def signup(request):
         return render(request, "round1/signup.html",{})
 
 def questions(request):
+    global mylist
+    global name
     con={}
     so=Signup.objects.get(userid=name)
     con['s']=so
+    con['uid']=name
     if request.POST.get('next'):
-        global mylist
-        global name
         mylist=map(str,so.array.split(';'))
         if mylist[0]=='':
             return HttpResponseRedirect('/')
@@ -95,15 +97,12 @@ def questions(request):
         return render(request,"round1/questions.html",con)
 
 def update_state(request):
-	print "Ajax"
 	if request.method == "POST":
-		print "aala"
 		if request.is_ajax():
-			uid = request.POST.get("uid")
+			uid = request.POST.get("uid1")
 
-			print "uid"
 			s=Signup.objects.get(userid=uid)
-			s.timestamp = s.timestamp-10
+			s.timestamp = s.timestamp-1
 			s.save()
 
 			return questions(request)
