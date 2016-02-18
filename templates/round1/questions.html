@@ -27,10 +27,10 @@
                 <form action="/questions/" method="post">
                     {% csrf_token %}
                     <p class="panel panel-default" style="background:grey;">{{q.question}} </p>
-                    <input type="radio" name="oa" >{{q.op1}}<br><br>
-                    <input type="radio" name="ob" >{{q.op2}}<br><br>
-                    <input type="radio" name="oc" >{{q.op3}}<br><br>
-                    <input type="radio" name="od" >{{q.op4}}<br><br>
+                    <input type="radio" name="option" value="1" >{{q.op1}}<br><br>
+                    <input type="radio" name="option" value="2" >{{q.op2}}<br><br>
+                    <input type="radio" name="option" value="3" >{{q.op3}}<br><br>
+                    <input type="radio" name="option" value="4" >{{q.op4}}<br><br>
 
                     <input type="submit" name="next" id="next" class="btn btn-primary">
                 </form>
